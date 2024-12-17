@@ -1,0 +1,653 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mahalaxmi Financier</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    background: url('{% static "img/bg14.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+}
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #2c3e50;
+        }
+
+        th {
+            background-color: #2c3
+            e50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .employee-list-container {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .action-buttons a {
+            padding: 8px 12px;
+            margin: 0 5px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .action-buttons .edit-btn {
+            background-color: #3498db;
+        }
+
+        .action-buttons .delete-btn {
+            background-color: #e74c3c;
+        }
+
+        .action-buttons a:hover {
+            opacity: 0.8;
+        }
+
+        /* Form Styling */
+        .employee-form {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #2c3e50;
+        }
+
+        .employee-form h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #34495e;
+        }
+
+        .employee-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .employee-form input,
+        .employee-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #2c3e50;
+            font-size: 1em;
+            color: #34495e;
+        }
+
+        .employee-form button {
+            background-color: #2c3e50;
+            color: #fff;
+            border: #2c3e50;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .employee-form button:hover {
+            background-color: #34495e;
+        }
+
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .bg-danger {
+    background-color: red !important;
+}
+
+.bg-orange {
+    background-color: orange !important;
+}
+
+.bg-darkyellow {
+    background-color: #cc9a00 !important; /* Dark Yellow */
+}
+
+.bg-turmeric {
+    background-color: #e7a000 !important; /* Turmeric Yellow */
+}
+
+
+
+    </style>
+      <!-- Add Bootstrap or any other CSS framework for modal (optional) -->
+
+    <!-- Optionally include jQuery (for handling the modal) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        {% include 'admin_nav.html' %}
+        <!-- Hamburger Icon (for mobile) -->
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Form (Left Side) -->
+                <div class="col-md-6">
+
+
+                    <form method="POST" class="employee-form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="serialNo">Account Number</label>
+                        <input type="text" id="serialNo" name="serialNo" placeholder="Customer" required list="customer_name" oninput="showConsignorDatalist()" onchange="fetchSenderDetails()">
+                        <datalist id="customer_name"></datalist> <!-- Container for the suggestions -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="previous_date">Previous Date</label>
+                            <input type="date" id="previous_date" name="date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="number" id="amount" name="amount" required>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Save</button>
+                    </form>
+                </div>
+
+<!-- Table (Right Side) -->
+<div class="col-md-6">
+    <!-- Date Picker -->
+    <input type="date" id="date" name="date" class="form-control">
+
+    <table class="employee-list-container">
+        <thead>
+            <tr>
+                <th>Account No</th>
+                <th>Previous Date</th>
+                <th>Paid Amount</th>
+                <th>Balance</th>
+                <th>Day Count</th>
+                <th id="daycount1Header">Days</th> <!-- Add an ID for Day Count 1 column -->
+                <th>Action</th> <!-- Add Action column for Edit button -->
+            </tr>
+        </thead>
+        <tbody id="loan-data-body">
+            <!-- Data will be populated here via AJAX -->
+        </tbody>
+        <tr>
+            <td colspan="2" class="text-right"><strong>Total Amount:</strong></td>
+            <td id="totalAmount" colspan="5">0</td>
+        </tr>
+    </table>
+</div>
+
+<!-- Modal for Edit -->
+<div class="modal fade" id="editLoanModal" tabindex="-1" role="dialog" aria-labelledby="editLoanModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editLoanModalLabel">Edit Loan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal form fields -->
+                <form id="editLoanForm">
+                    <div class="form-group">
+                        <label for="serialNo">Account No</label>
+                        <input type="text" class="form-control" id="editSerialNo" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDate">Date</label>
+                        <input type="date" class="form-control" id="editDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="editAmount">Amount</label>
+                        <input type="number" class="form-control" id="editAmount" onchange="updateBalance()">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBalance">Balance</label>
+                        <input type="number" class="form-control" id="editBalance" disabled>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+     {% if error_message %}
+        <script type="text/javascript">
+            // Display the error message in a JavaScript alert
+            alert("{{ error_message }}");
+        </script>
+    {% endif %}
+                <script>
+                  function showConsignorDatalist() {
+    const input = document.getElementById('serialNo');
+    const datalist = document.getElementById('customer_name');
+
+    if (input.value.length >= 2) {
+        fetch(`/get_customer_name?query=${encodeURIComponent(input.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data); // Debugging: Check the data in the console
+                datalist.innerHTML = ''; // Clear previous options
+
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach(customer => {
+                        const option = document.createElement('option');
+                        option.value = `${customer.name} (${customer.serialNo})`; // Display both name and serialNo
+                        datalist.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.value = 'No results';
+                    datalist.appendChild(option);
+                }
+            })
+            .catch(error => console.error('Error fetching customer data:', error));
+    } else {
+        datalist.innerHTML = ''; // Clear the datalist if fewer than 2 characters
+    }
+}
+
+
+function showConsignorDatalist() {
+    const input = document.getElementById('serialNo');
+    const datalist = document.getElementById('customer_name');
+
+    if (input.value.length >= 2) {
+        fetch(`/get_customer_name?query=${encodeURIComponent(input.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data); // Debugging: Check the data in the console
+                datalist.innerHTML = ''; // Clear previous options
+
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach(customer => {
+                        const option = document.createElement('option');
+                        // Display both name and serialNo in the datalist
+                        option.value = `${customer.name} (${customer.serialNo})`;
+                        option.dataset.serialNo = customer.serialNo; // Store serialNo as data attribute
+                        datalist.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.value = 'No results';
+                    datalist.appendChild(option);
+                }
+            })
+            .catch(error => console.error('Error fetching customer data:', error));
+    } else {
+        datalist.innerHTML = ''; // Clear the datalist if fewer than 2 characters
+    }
+}
+
+// This function will be called when the user selects an option from the datalist
+function fetchSenderDetails() {
+    const input = document.getElementById('serialNo');
+    const selectedValue = input.value;
+
+    // Get the datalist options
+    const datalist = document.getElementById('customer_name');
+    let serialNo = null;
+
+    // Loop through the datalist options and find the selected one
+    for (let option of datalist.options) {
+        if (selectedValue === option.value) {
+            // If the selected value matches an option, get the serialNo from the data attribute
+            serialNo = option.dataset.serialNo;
+            break;
+        }
+    }
+
+    if (serialNo) {
+        console.log('Fetching details for SerialNo:', serialNo);  // Debugging: Check the extracted serialNo
+
+        // Update the input field with only the serialNo
+        input.value = serialNo;  // Set only the serialNo in the input field
+
+        // Fetch sender details based on the serialNo
+        fetch(`/get_customer_details?serialNo=${encodeURIComponent(serialNo)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched sender details:', data); // Debugging: Check the data in the console
+
+                // Populate the form fields with the fetched data
+                if (data.serialNo) {
+                    // You can populate other form fields here, but for now, just logging data
+                    console.log('Sender details:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching sender details:', error));
+    }
+}
+
+                </script>
+<script>
+    // Function to fetch loan data and update the table
+    function fetchLoanData(selectedDate) {
+        fetch(`/get_loan_tabledata/?date=${selectedDate}`)
+            .then(response => response.json())
+            .then(data => {
+                var tableBody = document.getElementById('loan-data-body');
+                tableBody.innerHTML = ''; // Clear existing table rows
+                let totalAmount = 0; // Initialize total amount
+
+                data.loans.forEach(function(loan) {
+    var row = document.createElement('tr');
+    var colorClass = getRowColor(loan.daycount, loan.daycount1); // Get the row color based on daycount
+
+    row.classList.add(colorClass); // Add the calculated color class to the row
+
+    row.innerHTML = `
+        <td>${loan.serialNo}</td>
+        <td>${loan.date}</td>
+        <td>${loan.amount}</td>
+        <td>${loan.balance}</td>
+        <td>${loan.daycount}</td>
+        <td class="daycount1">${loan.daycount1 || ''}</td>
+        <td><button class="btn btn-sm btn-primary editBtn" data-loan='${JSON.stringify(loan)}'>Edit</button></td>
+    `;
+    tableBody.appendChild(row);
+
+     totalAmount += parseFloat(loan.amount);
+
+});
+
+
+                // Update the Total Amount in the table
+                document.getElementById('totalAmount').textContent = totalAmount.toFixed(2); // Display with 2 decimal places
+
+                // Check if Day Count 1 column should be hidden
+                if (shouldHideDayCount1(data)) {
+                    document.getElementById('daycount1Header').style.display = 'none';
+                    var daycount1Cells = document.querySelectorAll('.daycount1');
+                    daycount1Cells.forEach(cell => cell.style.display = 'none');
+                } else {
+                    document.getElementById('daycount1Header').style.display = 'table-cell';
+                    var daycount1Cells = document.querySelectorAll('.daycount1');
+                    daycount1Cells.forEach(cell => cell.style.display = 'table-cell');
+                }
+
+
+                // Add event listeners for the edit buttons
+                var editButtons = document.querySelectorAll('.editBtn');
+                editButtons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var loanData = JSON.parse(button.getAttribute('data-loan'));
+                        openEditModal(loanData);
+                    });
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Function to determine if Day Count 1 should be hidden
+    function shouldHideDayCount1(data) {
+        return data.loans.every(loan => !loan.daycount1 || loan.daycount1 === 0);
+    }
+
+   // Function to calculate the row color based on daycount and daycount1
+function getRowColor(daycount, daycount1) {
+    console.log(`Calculating color for daycount: ${daycount}, daycount1: ${daycount1}`);
+
+    // If daycount1 is missing or daycount is greater than or equal to daycount1, return empty class
+    if (!daycount1 || daycount >= daycount1) {
+        return ''; // Default color (no change)
+    }
+
+    let difference = daycount1 - daycount;
+    let colorClass = '';
+
+    // Color range based on the difference between daycount and daycount1
+    if (difference <= 1) {
+        colorClass = 'bg-danger'; // Red
+    } else if (difference <= 2) {
+        colorClass = 'bg-orange'; // Orange
+    } else if (difference <= 3) {
+        colorClass = 'bg-darkyellow'; // Dark Yellow
+    } else if (difference <= 4) {
+        colorClass = 'bg-turmeric'; // Turmeric Yellow
+    } else {
+        colorClass = 'bg-yellow'; // Yellow
+    }
+
+    console.log(`Assigned color class: ${colorClass}`);
+    return colorClass;
+}
+
+
+    // Open the modal and populate the fields with the selected loan data
+    function openEditModal(loanData) {
+        document.getElementById('editSerialNo').value = loanData.serialNo;
+        document.getElementById('editDate').value = loanData.date;
+        document.getElementById('editAmount').value = loanData.amount;
+        document.getElementById('editBalance').value = loanData.balance;
+
+        // Store the previous amount and balance as data attributes for calculation
+        document.getElementById('editAmount').dataset.previousAmount = loanData.amount;
+        document.getElementById('editAmount').dataset.previousBalance = loanData.balance;
+
+        // Show the modal
+        $('#editLoanModal').modal('show');
+    }
+
+    // Update the balance when the amount is changed
+    function updateBalance() {
+        var amount = parseFloat(document.getElementById('editAmount').value);
+        var previousAmount = parseFloat(document.getElementById('editAmount').dataset.previousAmount);
+        var previousBalance = parseFloat(document.getElementById('editAmount').dataset.previousBalance);
+
+        if (!isNaN(amount) && !isNaN(previousAmount) && !isNaN(previousBalance)) {
+            var newBalance;
+
+            // Calculate the difference between old and new amounts
+            var difference = Math.abs(previousAmount - amount);
+
+            if (amount > previousAmount) {
+                // If new amount is greater, subtract the difference from the previous balance
+                newBalance = previousBalance - difference;
+            } else if (amount < previousAmount) {
+                // If new amount is lesser, add the difference to the previous balance
+                newBalance = previousBalance + difference;
+            } else {
+                // If the amount is the same, the balance stays the same
+                newBalance = previousBalance;
+            }
+
+            // Update the balance input field with the new calculated balance
+            document.getElementById('editBalance').value = newBalance;
+        }
+    }
+
+    // Handle form submission and update the data in the backend
+    document.getElementById('editLoanForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent default form submission
+
+        var serialNo = document.getElementById('editSerialNo').value;
+        var date = document.getElementById('editDate').value;
+        var amount = parseFloat(document.getElementById('editAmount').value);
+        var balance = parseFloat(document.getElementById('editBalance').value);
+
+        // Send an AJAX request to update the loan data
+        fetch('/update_loan/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                serialNo: serialNo,
+                date: date,
+                amount: amount,
+                balance: balance
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Close the modal and refresh the table data
+                $('#editLoanModal').modal('hide');
+                var selectedDate = document.getElementById('date').value;
+                fetchLoanData(selectedDate);  // Re-fetch data to update total amount
+            } else {
+                alert('Failed to update loan data');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    // Set the default date to today's date when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        var today = new Date();
+        var formattedDate = today.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
+        document.getElementById('date').value = formattedDate; // Set default date in the input
+        fetchLoanData(formattedDate); // Fetch data for today's date automatically
+    });
+
+    // Add event listener for date change
+    document.getElementById('date').addEventListener('change', function() {
+        var selectedDate = this.value;  // Get selected date
+        if (selectedDate) {
+            fetchLoanData(selectedDate);  // Fetch data based on selected date
+        }
+    });
+</script>
+
+
+            </div>
+        </div>
+    </div>
+<script>
+    // Function to set the default date to the current date
+function setCurrentDate() {
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1; // Months are zero-based
+    var year = today.getFullYear();
+
+    // Format date as YYYY-MM-DD
+    var formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+    // Set the value of the date input
+    document.getElementById('date').value = formattedDate;
+}
+
+// Run the function when the page loads
+window.onload = setCurrentDate;
+</script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        // JavaScript to toggle the sidebar on mobile when hamburger is clicked
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.querySelector('.sidebar');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // JavaScript to fetch previous date and amount when serialNo is entered
+        document.getElementById('serialNo').addEventListener('blur', function() {
+            const serialNo = this.value;
+
+            fetch(`/get_loan_data/${serialNo}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.previous_date) {
+                        document.getElementById('previous_date').value = data.previous_date;
+                    }
+                    if (data.amount) {
+                        document.getElementById('amount').value = data.amount;
+                    }
+                })
+                .catch(error => console.log('Error fetching loan data:', error));
+        });
+    </script>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

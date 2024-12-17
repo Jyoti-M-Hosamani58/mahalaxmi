@@ -1,0 +1,199 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Woody - Carpenter Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+       body {
+    margin: 0;
+    padding: 0;
+    background: url('{% static "img/bg14.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+}
+    /* Basic Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+    }
+
+
+    /* Main Content */
+    .main-content {
+        flex: 1;
+        padding: 20px;
+    }
+
+    header h1 {
+        margin-bottom: 20px;
+    }
+
+
+
+
+    .employee-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .employee-form input,
+    .employee-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+        color: #34495e;
+        border: 1px solid #2c3e50;
+    }
+
+    .employee-form button {
+        background-color: #2c3e50;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1.1em;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .employee-form button:hover {
+        background-color: #34495e;
+    }
+  </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+
+    <!-- Spinner End -->
+
+    {% include 'admin_nav.html' %}
+
+   <!-- Body start-->
+
+
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header>
+        <h1  style="text-align:center;">Enter Employee Details</h1><hr><br/>
+      </header>
+
+      <!-- Employee Details Form -->
+      <div class="employee-form">
+        <form method="POST">
+    {% csrf_token %}
+    <div class="row g-3">
+        <!-- Name and Email Fields (Side by Side) -->
+        <div class="col-md-6">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter employee's name" value="{{ users.name }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="phone">Phone No</label>
+            <input type="text" id="phone" name="phone" placeholder="Enter employee's phone number" required>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <!-- Phone and Address Fields (Side by Side) -->
+
+        <div class="col-md-6">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{ users.email }}" placeholder="Enter employee's email">
+        </div>
+        <div class="col-md-6">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter employee's password" required>
+        </div>
+
+    </div>
+
+    <div class="row g-3">
+        <!-- Password Field (Single Column) -->
+
+        <div class="col-md-6">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="4" placeholder="Enter employee's address" required></textarea>
+        </div>
+
+
+        <div class="col-md-6">
+            <br/>
+            <br/>
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+</form>
+
+      </div>
+    </div>
+  </div>
+
+ <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Customer</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Customer</h1>
+        <form method="POST" enctype="multipart/form-data" id="customerForm">
+            {% csrf_token %}
+
+            <!-- Form fields for Customer Details -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="serialNo">Serial Number</label>
+                <select id="serialNo" name="serialNo">
+                    <option value="">-- Select --</option>
+                    <option value="{{ }}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="agreement">Agreement Number</label>
+                <input type="text" id="agreement" name="agreement" required>
+            </div>
+            <div class="form-group">
+                <label for="aadharNo">Aadhar Number</label>
+                <input type="text" id="aadharNo" name="aadharNo" required>
+            </div>
+            <div class="form-group">
+                <label for="panNo">PAN Number</label>
+                <input type="text" id="panNo" name="panNo" required>
+            </div>
+            <div class="form-group">
+                <label for="aadharAddress">Aadhar Address</label>
+                <input type="text" id="aadharAddress" name="aadharAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="presentAddress">Present Address</label>
+                <input type="text" id="presentAddress" name="presentAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNo">Phone Number</label>
+                <input type="text" id="phoneNo" name="phoneNo" required>
+            </div>
+            <div class="form-group">
+                <label for="altphoneNo">Alternate Phone Number</label>
+                <input type="text" id="altphoneNo" name="altphoneNo">
+            </div>
+
+            <!-- Jamen Details (Optional) -->
+            <div class="form-group">
+                <label for="jamenName">Jamen Name</label>
+                <input type="text" id="jamenName" name="jamenName" required>
+            </div>
+            <div class="form-group">
+                <label for="jamenAddress">Jamen Address</label>
+                <input type="text" id="jamenAddress" name="jamenAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="jamenNo">Jamen Number</label>
+                <input type="text" id="jamenNo" name="jamenNo" required>
+            </div>
+            <div class="form-group">
+                <label for="customerImage">Customer Image (Optional)</label>
+                <input type="file" id="customerImage" name="customerImage">
+            </div>
+
+            <div class="form-group">
+                <label for="jamenImage">Jamen Image (Optional)</label>
+                <input type="file" id="jamenImage" name="jamenImage">
+            </div>
+
+            <!-- Loan Details -->
+            <div class="form-group">
+                <label for="loanAmt">Loan Amount</label>
+                <input type="text" id="loanAmt" name="loanAmt" required>
+            </div>
+            <div class="form-group">
+                <label for="loanDate">Loan Date</label>
+                <input type="date" id="loanDate" name="loanDate" required>
+            </div>
+            <div class="form-group">
+                <label for="loanEnddate">Loan End Date</label>
+                <input type="date" id="loanEnddate" name="loanEnddate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="loanType">Loan Type</label>
+                <select id="loanType" name="loanType" required>
+                    <option value="">-- SELECT --</option>
+                    <option value="Daily Loan">Daily Loan</option>
+                    <option value="Gold Loan">Gold Loan</option>
+                    <option value="Property Loan">Property Loan</option>
+                    <option value="Vehicle Loan">Vehicle Loan</option>
+                    <option value="Monthly Loan">Monthly Loan</option>
+                </select>
+            </div>
+
+            <!-- Loan Day Count (Visible only for "Daily Loan") -->
+            <div class="form-group" id="loanDayCountContainer" style="display: none;">
+                <label for="loanDayCount">Loan Day Count</label>
+                <select id="loanDayCount" name="loanDayCount" required>
+                    <option value="">-- SELECT --</option>
+                    <option value="100">100 Days</option>
+                    <option value="200">200 Days</option>
+                </select>
+            </div>
+
+            <!-- Extra Fields for Other Loan Types -->
+            <div id="extraFields" style="display: none;">
+                <div class="form-group">
+                    <label for="loanpayDate">Loan Pay Date</label>
+                    <select id="loanpayDate" name="loanpayDate" required>
+                        <option value="" disabled selected>Select a day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="interestAmt">Interest Amount</label>
+                    <input type="number" id="interestAmt" name="interestAmt">
+                </div>
+
+                <div class="form-group">
+                    <label for="objectValue">Object Value</label>
+                    <input type="number" id="objectValue" name="objectValue">
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Customer Image (Optional)</label>
+                    <input type="file" id="image" name="image">
+                </div>
+            </div>
+            <div class="form-group">
+                    <label for="active">Active</label>
+                    <input type="checkbox" id="active" name="active" value="True">
+                </div>
+
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- The JavaScript code -->
+    <script>
+
+        // Function to get the number of days in the current month
+        function getDaysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        // Populate the days dynamically based on the current month
+        document.addEventListener('DOMContentLoaded', function() {
+            var select = document.getElementById('loanpayDate');
+            var today = new Date();
+            var daysInMonth = getDaysInMonth(today.getMonth() + 1, today.getFullYear()); // Get the number of days in the current month
+
+            // Create options for each day in the month
+            for (var day = 1; day <= daysInMonth; day++) {
+                var option = document.createElement('option');
+                option.value = day;
+                option.textContent = day;
+                select.appendChild(option);
+            }
+        });
+    </script>
+<script>
+    // Handle Loan Type Change (show/hide fields)
+    document.getElementById('loanType').addEventListener('change', function () {
+        var loanType = this.value;
+        var loanDayCountContainer = document.getElementById('loanDayCountContainer');
+        var loanDayCount = document.getElementById('loanDayCount');
+        var extraFields = document.getElementById('extraFields');
+        var loanpayDate = document.getElementById('loanpayDate');
+        var interestAmt = document.getElementById('interestAmt');
+        var objectValue = document.getElementById('objectValue');
+
+        // Logic for showing/hiding fields
+        if (loanType === 'Daily Loan') {
+            loanDayCountContainer.style.display = 'block';
+            loanDayCount.required = true;
+            loanDayCount.disabled = false; // Enable the field
+
+            extraFields.style.display = 'none';
+            loanpayDate.required = false;
+            interestAmt.required = false;
+            objectValue.required = false;
+        } else if (
+            loanType === 'Gold Loan' ||
+            loanType === 'Vehicle Loan' ||
+            loanType === 'Property Loan' ||
+            loanType === 'Monthly Loan'
+        ) {
+            loanDayCountContainer.style.display = 'none';
+            loanDayCount.required = false;
+            loanDayCount.disabled = true; // Disable the field to avoid submission
+
+            extraFields.style.display = 'block';
+            loanpayDate.required = true;
+            interestAmt.required = true;
+            objectValue.required = true;
+        } else {
+            // Hide all optional fields if no relevant loan type is selected
+            loanDayCountContainer.style.display = 'none';
+            loanDayCount.required = false;
+            loanDayCount.disabled = true; // Disable the field to avoid submission
+
+            extraFields.style.display = 'none';
+            loanpayDate.required = false;
+            interestAmt.required = false;
+            objectValue.required = false;
+        }
+    });
+
+    // Trigger the change event on page load
+    document.getElementById('loanType').dispatchEvent(new Event('change'));
+</script>
+
+</body>
+</html>

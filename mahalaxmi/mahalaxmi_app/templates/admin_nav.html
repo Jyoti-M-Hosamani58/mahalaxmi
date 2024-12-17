@@ -1,0 +1,62 @@
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary">Mahalaxmi Financier</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{% url 'admin_home' %}" class="nav-item nav-link active">Home</a>
+              <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profile</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{% url 'company' %}" class="dropdown-item">Edit Profile</a>
+                        <a href="{% url 'viewCompany' %}" class="dropdown-item">View Profile</a>
+
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Employe</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{% url 'users' %}" class="dropdown-item">Employe Entry</a>
+                        <a href="{% url 'viewUser' %}" class="dropdown-item">Employe List</a>
+
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Customer</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{% url 'customer' %}" class="dropdown-item">New Customer</a>
+                        <a href="{% url 'viewCustomer' %}" class="dropdown-item">Customer List</a>
+
+                    </div>
+                </div>
+              <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Entry Report</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{% url 'dailyLoanEntry' %}" class="dropdown-item">Daily Loan Entry</a>
+                        <a href="{% url 'loanEntry' %}" class="dropdown-item">Other Loan Entry</a>
+
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Report</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{% url 'recoveryReport' %}" class="dropdown-item">Daily Loan Report</a>
+                        <a href="{% url 'loanRecoveryReport' %}" class="dropdown-item">Other Loan Report</a>
+                        <a href="{% url 'loanPrincipleRecoveryReport' %}" class="dropdown-item">Other Principle Report</a>
+                        <a href="{% url 'outgoingReport' %}" class="dropdown-item">OutGoing Report</a>
+
+                    </div>
+                </div>
+
+                <a href="https://uidai.gov.in/en/" class="nav-item nav-link">Aadhar Auth</a>
+                <a href="{% url 'userlogin' %}" class="nav-item nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+

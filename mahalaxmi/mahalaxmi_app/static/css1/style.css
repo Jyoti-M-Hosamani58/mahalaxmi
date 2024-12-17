@@ -1,0 +1,166 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #8C887D;
+  color: #312A14;
+}
+
+.dashboard {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #FBEAB2;
+  padding-top: 20px;
+}
+
+label{
+    font-weight:bold;
+    font-size:18px;
+    color:#292723;
+}
+input[type="text"],
+input[type="number"] {
+  font-size: 14px;
+  background-color: #E5E0D7;
+}
+.submit-btn {
+  background-color: #E5E0D7;
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: #FBEAB2;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar-header h2 {
+  color: #312A14;
+  font-size: 24px;
+}
+
+.nav-links {
+  list-style-type: none;
+}
+
+.nav-links li {
+  padding: 15px;
+  text-align: center;
+}
+
+.nav-links li a {
+  color: #A39978;
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+}
+
+
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+header h1 {
+  color: #312A14;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  padding-top: 20px;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar-header h2 {
+  color: #4A401E;
+  font-size: 24px;
+}
+
+.nav-links {
+  list-style-type: none;
+  padding: 0;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links li a {
+  padding: 15px;
+  display: block;
+  text-decoration: none;
+  color: #4A401E;
+  font-weight: 500;
+  text-align: left;
+}
+
+.nav-links li a:hover {
+  background-color: #8C887D;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropbtn {
+  background-color: #FBEAB2;
+  color: #4A401E;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover {
+  background-color: #FBEAB2;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: #FCF2D1;
+  min-width: 200px;
+  z-index: 1;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+  color: #4FBEAB2;
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #FBEAB2;
+}
+
+/* Show dropdown when hovering */
+.dropdown:hover .dropdown-content {
+  display: block;
+}

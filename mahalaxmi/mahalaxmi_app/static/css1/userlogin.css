@@ -1,0 +1,120 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Full Page Setup */
+body, html {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('https://source.unsplash.com/1600x900/?business,finance,city') no-repeat center center/cover;
+  background-size: cover;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+}
+
+/* Dark overlay for background */
+.login-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Darken background for contrast */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Login Box */
+.login-box {
+  background: rgba(0, 0, 0, 0.8);  /* Dark background for the box */
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  color: white;
+}
+
+/* Header */
+h1 {
+  font-size: 2.5rem;
+  color: #E3AC36; /* Gold color */
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Subheading */
+p {
+  font-size: 1rem;
+  color: #f1f1f1;
+  margin-bottom: 30px;
+}
+
+/* Input Fields */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 14px;
+  color: #dcdcdc;  /* Lighter grey for labels */
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #444;  /* Dark grey border */
+  font-size: 16px;
+  color: #333;
+  transition: all 0.3s ease-in-out;
+}
+
+.input-group input:focus {
+  border-color: #E3AC36;  /* Gold border on focus */
+  outline: none;
+}
+
+/* Button Styles */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #E3AC36; /* Gold button */
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #BBAA72; /* Slightly darker gold on hover */
+}
+
+/* Footer Section */
+.footer {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #dcdcdc; /* Light grey text for footer */
+}
+
+.footer a {
+  color: #E3AC36;  /* Gold color for links */
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

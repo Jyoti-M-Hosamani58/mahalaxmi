@@ -1,0 +1,610 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Woody - Carpenter Website Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+ body {
+    margin: 0;
+    padding: 0;
+    background: url('{% static "img/bg14.jpg" %}') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+}
+        .form-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            border: 1px solid #2c3e50;
+        }
+        .form-section h3 {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            border: 1px solid #2c3e50;
+        }
+        .form-group input[type="checkbox"] {
+            width: auto;
+        }
+        .btn-submit {
+            background-color: #4d604f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #2980b9;
+        }
+        #extraFields {
+            display: none;
+        }
+    </style>
+       <style>
+    /* Simple styling for better layout */
+    video, canvas, img {
+        border: 1px solid black;
+        margin-top: 10px;
+    }
+
+    button {
+        margin: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+    /* Styling the image preview to be small */
+    #imagePreview {
+        width: 150px; /* Set a fixed width */
+        height: auto; /* Maintain aspect ratio */
+        display: none; /* Hide initially */
+        margin-top: 10px; /* Space above the image */
+    }
+</style>
+
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        {% include 'admin_nav.html' %}
+        <!-- Main Content -->
+        <div class="section-title text-center">
+    <h1 class="display-5 mb-5">Add Customer</h1>
+            </div>
+
+           <form method="POST" id="imageForm" action="/customer/" enctype="multipart/form-data">
+    {% csrf_token %}
+
+
+   <div class="container-fluid">
+    <div class="row">
+        <!-- Customer Details Section (Left Column) -->
+        <div class="col-md-4">
+            <div class="form-section">
+                <h3>Customer Details</h3>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                <label for="serialNo">Serial Number</label>
+                <select id="serialNo" name="serialNo">
+    <option value="">-- Select --</option>
+    {% for serial in missing_serials %}
+        <option value="{{ serial }}">{{ serial }}</option>
+    {% endfor %}
+</select>
+
+            </div>
+            <div class="form-group">
+                <label for="agreement">Agreement Number</label>
+                <input type="text" id="agreement" name="agreement" required>
+            </div>
+                <div class="form-group">
+                    <label for="aadharNo">Aadhar Number</label>
+                    <input type="text" id="aadharNo" name="aadharNo" required>
+                </div>
+                <div class="form-group">
+                    <label for="panNo">PAN Number</label>
+                    <input type="text" id="panNo" name="panNo" required>
+                </div>
+                <div class="form-group">
+                    <label for="aadharAddress">Aadhar Address</label>
+                    <input type="text" id="aadharAddress" name="aadharAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="presentAddress">Present Address</label>
+                    <input type="text" id="presentAddress" name="presentAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNo">Phone Number</label>
+                    <input type="text" id="phoneNo" name="phoneNo" required>
+                </div>
+                <div class="form-group">
+                    <label for="altphoneNo">Alternate Phone Number</label>
+                    <input type="text" id="altphoneNo" name="altphoneNo">
+                </div>
+
+
+<input type="hidden" id="customerImage" name="customerImage">
+<div class="form-group">
+    <label>Customer Image (Optional)</label>
+    <br>
+    <video id="cameraPreview" autoplay style="width: 300px;"></video>
+    <br>
+    <!-- Buttons -->
+    <button id="captureButton" type="button">Capture Photo</button>
+    <button id="uploadButton" type="button">Upload from File</button>
+    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    <br><br>
+    <!-- Display Captured or Uploaded Image -->
+    <canvas id="capturedImage" style="display: none;"></canvas>
+    <img id="capturedImagePreview" src="" alt="Captured Image" style="display: none; width: 300px;">
+    <img id="uploadedImage" src="" alt="Uploaded Image" style="display: none; width: 300px;">
+</div>
+<div class="form-group">
+    <label for="pdf">Upload Aadhar PDF:</label>
+    <input type="file" name="pdf" accept=".pdf" id="pdf" />
+</div>
+<script>
+    const cameraPreview = document.getElementById('cameraPreview');
+    const captureButton = document.getElementById('captureButton');
+    const uploadButton = document.getElementById('uploadButton');
+    const fileInput = document.getElementById('fileInput');
+    const capturedImage = document.getElementById('capturedImage');
+    const capturedImagePreview = document.getElementById('capturedImagePreview');
+    const uploadedImage = document.getElementById('uploadedImage');
+    const canvasContext = capturedImage.getContext('2d');
+
+    // Start the camera
+    async function startCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            cameraPreview.srcObject = stream;
+        } catch (err) {
+            console.error("Error accessing camera: ", err);
+            alert("Camera access is required to capture an image.");
+        }
+    }
+
+    // Capture Image from the Video Stream
+    captureButton.addEventListener('click', function () {
+        capturedImage.width = cameraPreview.videoWidth;
+        capturedImage.height = cameraPreview.videoHeight;
+        canvasContext.drawImage(cameraPreview, 0, 0, cameraPreview.videoWidth, cameraPreview.videoHeight);
+
+        // Convert canvas to base64 image
+        const imageData = capturedImage.toDataURL('image/png');
+        document.getElementById('customerImage').value = imageData;
+
+        // Display the captured image in preview
+        capturedImagePreview.src = imageData; // Set captured image as source
+        capturedImagePreview.style.display = 'block';
+        uploadedImage.style.display = 'none'; // Hide uploaded image
+    });
+
+    // Open File Input Dialog
+    uploadButton.addEventListener('click', function () {
+        fileInput.click();
+    });
+
+    // Handle File Input Change Event
+    fileInput.addEventListener('change', function () {
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                uploadedImage.src = e.target.result;
+                uploadedImage.style.display = 'block';
+                capturedImagePreview.style.display = 'none'; // Hide captured image
+
+                // Pass the uploaded image to hidden field
+                document.getElementById('customerImage').value = e.target.result;
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    });
+
+    // Initialize the camera when the page loads
+    window.addEventListener('load', startCamera);
+</script>
+
+            </div>
+        </div>
+
+        <!-- Jamen Details Section (Middle Column) -->
+        <div class="col-md-4">
+            <div class="form-section">
+                <h3>Jamen Details</h3>
+                <div class="form-group">
+                    <label for="jamenName">Jamen Name</label>
+                    <input type="text" id="jamenName" name="jamenName" required>
+                </div>
+                <div class="form-group">
+                    <label for="jamenAddress">Jamen Address</label>
+                    <input type="text" id="jamenAddress" name="jamenAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="jamenNo">Jamen Number</label>
+                    <input type="text" id="jamenNo" name="jamenNo" required>
+                </div>
+
+            <div class="form-group">
+                    <label for="jamenaadharNo">Jamen AadharNumber</label>
+                    <input type="text" id="jamenaadharNo" name="jamenaadharNo" required>
+                </div>
+            <input type="hidden" id="jamenImageData" name="jamenImageData">
+<div class="form-group">
+    <label>Jamen Image (Optional)</label>
+    <br>
+    <video id="jamenCameraPreview" autoplay style="width: 300px;"></video>
+    <br>
+    <!-- Buttons -->
+    <button id="jamenCaptureButton" type="button">Capture Jamen Image</button>
+    <button id="jamenUploadButton" type="button">Upload Jamen Image from File</button>
+    <input type="file" id="jamenFileInput" accept="image/*" style="display: none;">
+    <br><br>
+    <!-- Display Captured or Uploaded Image -->
+    <canvas id="jamenCapturedImage" style="display: none;"></canvas>
+    <img id="jamenCapturedImagePreview" src="" alt="Captured Jamen Image" style="display: none; width: 300px;">
+    <img id="jamenUploadedImage" src="" alt="Uploaded Jamen Image" style="display: none; width: 300px;">
+</div>
+<script>
+    const jamenCameraPreview = document.getElementById('jamenCameraPreview');
+const jamenCaptureButton = document.getElementById('jamenCaptureButton');
+const jamenUploadButton = document.getElementById('jamenUploadButton');
+const jamenFileInput = document.getElementById('jamenFileInput');
+const jamenCapturedImage = document.getElementById('jamenCapturedImage');
+const jamenCapturedImagePreview = document.getElementById('jamenCapturedImagePreview');
+const jamenUploadedImage = document.getElementById('jamenUploadedImage');
+const jamenCanvasContext = jamenCapturedImage.getContext('2d');
+
+// Start the camera for Jamen image
+async function startJamenCamera() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        jamenCameraPreview.srcObject = stream;
+    } catch (err) {
+        console.error("Error accessing camera: ", err);
+        alert("Camera access is required to capture a Jamen image.");
+    }
+}
+
+// Capture Image from the Video Stream for Jamen image
+jamenCaptureButton.addEventListener('click', function () {
+    jamenCapturedImage.width = jamenCameraPreview.videoWidth;
+    jamenCapturedImage.height = jamenCameraPreview.videoHeight;
+    jamenCanvasContext.drawImage(jamenCameraPreview, 0, 0, jamenCameraPreview.videoWidth, jamenCameraPreview.videoHeight);
+
+    // Convert canvas to base64 image
+    const jamenImageData = jamenCapturedImage.toDataURL('image/png');
+    document.getElementById('jamenImageData').value = jamenImageData;
+
+    // Display the captured image in preview
+    jamenCapturedImagePreview.src = jamenImageData; // Set captured image as source
+    jamenCapturedImagePreview.style.display = 'block';
+    jamenUploadedImage.style.display = 'none'; // Hide uploaded image
+});
+
+// Open File Input Dialog for Jamen Image
+jamenUploadButton.addEventListener('click', function () {
+    jamenFileInput.click();
+});
+
+// Handle File Input Change Event for Jamen Image
+jamenFileInput.addEventListener('change', function () {
+    if (jamenFileInput.files && jamenFileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            jamenUploadedImage.src = e.target.result;
+            jamenUploadedImage.style.display = 'block';
+            jamenCapturedImagePreview.style.display = 'none'; // Hide captured image
+
+            // Pass the uploaded image to hidden field
+            document.getElementById('jamenImageData').value = e.target.result;
+        };
+        reader.readAsDataURL(jamenFileInput.files[0]);
+    }
+});
+
+// Initialize the camera when the page loads for Jamen image
+window.addEventListener('load', startJamenCamera);
+
+</script>
+
+            </div>
+        </div>
+
+        <!-- Loan Details Section (Right Column) -->
+        <div class="col-md-4">
+                        <div class="form-section">
+    <div class="form-group">
+        <label for="loanAmt">Loan Amount</label>
+        <input type="text" id="loanAmt" name="loanAmt" required>
+    </div>
+
+    <div class="form-group">
+        <label for="loanDate">Loan Date</label>
+        <input type="date" id="loanDate" name="loanDate" required>
+    </div>
+
+    <div class="form-group">
+        <label for="loanEnddate">Loan End Date</label>
+        <input type="date" id="loanEnddate" name="loanEnddate" required>
+    </div>
+
+    <div class="form-group">
+        <label for="loanType">Loan Type</label>
+        <select id="loanType" name="loanType" class="form-control" required>
+            <option value="">-- SELECT --</option>
+            <option value="Daily Loan">Daily Loan</option>
+            <option value="Gold Loan">Gold Loan</option>
+            <option value="Property Loan">Property Loan</option>
+            <option value="Vehicle Loan">Vehicle Loan</option>
+            <option value="Monthly Loan">Monthly Loan</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="loanDayCountContainer" style="display: none;">
+        <label for="loanDayCount">Loan Day Count</label>
+        <select id="loanDayCount" name="loanDayCount">
+            <option value="">-- SELECT --</option>
+            <option value="100">100 Days</option>
+            <option value="200">200 Days</option>
+        </select>
+    </div>
+
+                <div id="extraFields">
+                    <div class="form-group">
+    <label for="loanpayDate">Loan Pay Date</label>
+    <select id="loanpayDate" name="loanpayDate" required>
+        <option value="" disabled selected>Select a day</option>
+    </select>
+</div>
+
+                    <div class="form-group">
+                        <label for="interestAmt">Interest Amount</label>
+                        <input type="number" id="interestAmt" name="interestAmt">
+                    </div>
+                    <div class="form-group">
+                        <label for="objectValue">Object Value</label>
+                        <input type="number" id="objectValue" name="objectValue">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image (Optional)</label>
+                    <input type="file" id="image" name="image" />
+                    </div>
+
+                </div>
+                              <div class="form-group">
+                    <label for="active">Active</label>
+                    <input type="checkbox" id="active" name="active" value="True">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Button (Below all sections) -->
+    <div class="form-group text-center">
+        <button type="submit" class="btn-submit">Submit</button>
+    </div>
+   </div>
+           </form>
+</div>
+   <script>
+    // For customer form submission
+    document.getElementById('customerForm').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+            alert(data.message); // Show the response message in an alert box
+        } catch (error) {
+            alert("An error occurred. Please try again."); // Show an error message in case of failure
+            console.error(error);
+        }
+    });
+</script>
+
+<script>
+    // For image form submission
+    document.getElementById('imageForm').onsubmit = async function (e) {
+        e.preventDefault();  // Prevent normal form submission
+
+        const formData = new FormData(this);
+
+        // Append the base64 image data manually
+        const jamenImageData = document.getElementById('jamenImageData').value;
+        if (jamenImageData) {
+            formData.append('jamenImageData', jamenImageData);
+        }
+
+        // Submit form data via AJAX
+        try {
+            const response = await fetch('/customer/', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert('Customer saved successfully!'); // Show success message in alert
+            } else {
+                alert('Customer saved successfully!'); // Show failure message in alert
+            }
+        } catch (error) {
+            alert('An error occurred. Please try again.'); // Show error message in alert box
+            console.error(error);
+        }
+    };
+</script>
+ <script src="{% static 'js/scripts.js' %}"></script>
+        <!-- The JavaScript code -->
+    <script>
+        // Get the buttons and file input
+        const galleryButton = document.getElementById("galleryButton");
+        const cameraButton = document.getElementById("cameraButton");
+        const fileInput = document.getElementById("fileInput");
+        const imagePreview = document.getElementById("imagePreview");
+
+        // Event for selecting an image from the gallery
+        galleryButton.addEventListener("click", () => {
+            fileInput.removeAttribute("capture"); // Remove capture to allow gallery
+            fileInput.click();
+        });
+
+        // Event for capturing an image using the camera
+        cameraButton.addEventListener("click", () => {
+            fileInput.setAttribute("capture", "environment"); // Open camera
+            fileInput.click();
+        });
+
+        // Show the selected/captured image
+        fileInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+    <script>
+
+        // Function to get the number of days in the current month
+        function getDaysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        // Populate the days dynamically based on the current month
+        document.addEventListener('DOMContentLoaded', function() {
+            var select = document.getElementById('loanpayDate');
+            var today = new Date();
+            var daysInMonth = getDaysInMonth(today.getMonth() + 1, today.getFullYear()); // Get the number of days in the current month
+
+            // Create options for each day in the month
+            for (var day = 1; day <= daysInMonth; day++) {
+                var option = document.createElement('option');
+                option.value = day;
+                option.textContent = day;
+                select.appendChild(option);
+            }
+        });
+    </script>
+<script>
+    // Handle Loan Type Change (show/hide fields)
+    document.getElementById('loanType').addEventListener('change', function () {
+        var loanType = this.value;
+        var loanDayCountContainer = document.getElementById('loanDayCountContainer');
+        var loanDayCount = document.getElementById('loanDayCount');
+        var extraFields = document.getElementById('extraFields');
+        var loanpayDate = document.getElementById('loanpayDate');
+        var interestAmt = document.getElementById('interestAmt');
+        var objectValue = document.getElementById('objectValue');
+
+        // Logic for showing/hiding fields
+        if (loanType === 'Daily Loan') {
+            loanDayCountContainer.style.display = 'block';
+            loanDayCount.required = true;
+            loanDayCount.disabled = false; // Enable the field
+
+            extraFields.style.display = 'none';
+            loanpayDate.required = false;
+            interestAmt.required = false;
+            objectValue.required = false;
+        } else if (
+            loanType === 'Gold Loan' ||
+            loanType === 'Vehicle Loan' ||
+            loanType === 'Property Loan' ||
+            loanType === 'Monthly Loan'
+        ) {
+            loanDayCountContainer.style.display = 'none';
+            loanDayCount.required = false;
+            loanDayCount.disabled = true; // Disable the field to avoid submission
+
+            extraFields.style.display = 'block';
+            loanpayDate.required = true;
+            interestAmt.required = true;
+            objectValue.required = true;
+        } else {
+            // Hide all optional fields if no relevant loan type is selected
+            loanDayCountContainer.style.display = 'none';
+            loanDayCount.required = false;
+            loanDayCount.disabled = true; // Disable the field to avoid submission
+
+            extraFields.style.display = 'none';
+            loanpayDate.required = false;
+            interestAmt.required = false;
+            objectValue.required = false;
+        }
+    });
+
+    // Trigger the change event on page load
+    document.getElementById('loanType').dispatchEvent(new Event('change'));
+</script>
+
+</body>
+</html>
